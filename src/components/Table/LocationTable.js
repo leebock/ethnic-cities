@@ -1,6 +1,7 @@
 import {ViewRow} from "./ViewRow";
+import {EditRow} from "./EditRow";
 
-export const LocationTable = ({cities, onDelete}) => {
+export const LocationTable = ({cities, editId, onEdit, onDelete, onSave, onCancel}) => {
     return (
         <table className="table">
             <thead>
@@ -15,7 +16,21 @@ export const LocationTable = ({cities, onDelete}) => {
             </thead>
             <tbody>
                 {
-                    cities.map((city) => <ViewRow city={city} onDelete={onDelete}/>)
+                    cities.map(
+                        (city) => {
+                            let row;
+                            if (city.id === editId) {
+                                row = <EditRow city={city} 
+                                        onSave={onSave} 
+                                        onCancel={onCancel}/>;
+                            } else {
+                                row = <ViewRow city={city} 
+                                    onEdit={onEdit} 
+                                    onDelete={onDelete}/>;
+                            }
+                            return row;
+                        }
+                    )
                 }
             </tbody>
         </table>          

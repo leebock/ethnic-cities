@@ -1,5 +1,6 @@
-export const ViewRow = ({city, onDelete}) => {
-    const handleClick = (event) => {onDelete(city.id)};
+export const ViewRow = ({city, onDelete, onEdit}) => {
+    const handleDeleteClick = (event) => {onDelete(city.id)};
+    const handleEditClick = (event) => {onEdit(city.id)};
     return (
         <tr>
             <td>{city.id}</td>
@@ -8,8 +9,8 @@ export const ViewRow = ({city, onDelete}) => {
             <td>{city.lat}</td>
             <td>{city.lon}</td>
             <td>
-                <button className="btn btn-secondary">Edit</button>
-                <button className="btn btn-danger" onClick={handleClick}>Remove</button>
+                <button className="btn btn-secondary" onClick={handleEditClick}>Edit</button>
+                <button className="btn btn-danger" onClick={handleDeleteClick}>Remove</button>
             </td>
         </tr>        
     );
