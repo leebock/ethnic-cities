@@ -1,5 +1,6 @@
 import {ViewRow} from "./ViewRow";
 import {EditRow} from "./EditRow";
+import PropTypes from 'prop-types';
 
 export const LocationTable = ({cities, editId, onEdit, onDelete, onSave, onCancel}) => {
     return (
@@ -35,4 +36,13 @@ export const LocationTable = ({cities, editId, onEdit, onDelete, onSave, onCance
             </tbody>
         </table>          
     );
+}
+
+LocationTable.propTypes = {
+    cities: PropTypes.array.isRequired,
+    editId: PropTypes.number.isRequired,
+    onEdit: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
 }
