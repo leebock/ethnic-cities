@@ -9,7 +9,7 @@ export const ViewRow = ({city, onDelete, onEdit}) => {
             <td>{city.lat}</td>
             <td>{city.lon}</td>
             <td>
-                <button className="btn btn-secondary" onClick={handleEditClick}>Edit</button>
+                <button className="btn" onClick={handleEditClick}>Edit</button>
                 <button className="btn btn-danger" onClick={handleDeleteClick}>Remove</button>
             </td>
         </tr>        
