@@ -7,9 +7,9 @@ import {useState} from "react";
 function App() {
 
     const [cities, setCities] = useState([
-        {id: 1, name: "Portland", state: "OR", lat: 45.5, lon: 122.7},
-        {id: 2, name: "Nashville", state: "TN", lat: 36.1, lon: 87.78},
-        {id: 3, name: "Boston", state: "MA", lat: 42.36, lon: 71.05}
+        {id: 1, name: "Portland", state: "OR", lat: 45.5, lon: -122.7},
+        {id: 2, name: "Nashville", state: "TN", lat: 36.1, lon: -87.78},
+        {id: 3, name: "Boston", state: "MA", lat: 42.36, lon: -71.05}
     ]);
     
     const [editId, setEditId] = useState(-1);
@@ -48,10 +48,10 @@ function App() {
     
     return (
         <>
-            <header><h1>My First React App</h1></header>
+            <header className="container"><h1>My First React App</h1></header>
             <div className="container">
                 <div className="row">
-                    <MyMap/>
+                    <MyMap cities={cities}/>
                 </div>
                 <div className="row">
                         <LocationTable cities={cities} 
@@ -61,7 +61,7 @@ function App() {
                                     onCancel={cancelEditable}/>                    
                 </div>
             </div>
-            <footer>This is the footer.</footer>
+            <footer className="container">This is the footer.</footer>
         </>
     );
 

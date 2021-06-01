@@ -21,11 +21,11 @@ export const LocationTable = ({cities, editId, onEdit, onDelete, onSave, onCance
                         (city) => {
                             let row;
                             if (city.id === editId) {
-                                row = <EditRow city={city} 
+                                row = <EditRow key={city.id} city={city} 
                                         onSave={onSave} 
                                         onCancel={onCancel}/>;
                             } else {
-                                row = <ViewRow city={city} 
+                                row = <ViewRow key={city.id} city={city} 
                                     onEdit={onEdit} 
                                     onDelete={onDelete}/>;
                             }
