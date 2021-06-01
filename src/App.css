@@ -1,4 +1,9 @@
 #map {
   height: 300px;
   background: aliceblue;
+  flex: 1;
+}
+
+table.table tbody tr td input {
+  width: 100%;
 }

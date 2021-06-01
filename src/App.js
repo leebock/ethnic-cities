@@ -49,13 +49,19 @@ function App() {
     return (
         <>
             <header><h1>My First React App</h1></header>
-            <MyMap/>
-            <LocationTable cities={cities} 
-                        editId={editId} onEdit={editCity}
-                        onSave={replaceCity} 
-                        onDelete={deleteCity}
-                        onCancel={cancelEditable}/>
-            <footer>Thanks for looking at my app.</footer>
+            <div className="container">
+                <div className="row">
+                    <MyMap/>
+                </div>
+                <div className="row">
+                        <LocationTable cities={cities} 
+                                    editId={editId} onEdit={editCity}
+                                    onSave={replaceCity} 
+                                    onDelete={deleteCity}
+                                    onCancel={cancelEditable}/>                    
+                </div>
+            </div>
+            <footer>This is the footer.</footer>
         </>
     );
 
