@@ -8,7 +8,7 @@ function App() {
 
     const [cities, setCities] = useState([
         {id: 1, name: "Portland", state: "OR", lat: 45.5, lon: -122.7},
-        {id: 2, name: "Nashville", state: "TN", lat: 36.1, lon: -87.78},
+        {id: 2, name: "Nashville", state: "TN", lat: 36.1, lon: -86.78},
         {id: 3, name: "Boston", state: "MA", lat: 42.36, lon: -71.05}
     ]);
     
@@ -48,7 +48,7 @@ function App() {
     
     return (
         <div className="vh-100 d-flex flex-column">
-            <header className="container"><h1>My First React App</h1></header>
+            <header className="container mt-5"><h1>My First React App</h1></header>
             <div className="container d-flex flex-column flex-grow-1">
                 <div className="row flex-grow-1">
                     <MyMap cities={cities}/>
@@ -61,7 +61,7 @@ function App() {
                                     onCancel={cancelEditable}/>                    
                 </div>
             </div>
-            <footer className="container">This is the footer.</footer>
+            <footer className="container mb-5">This is the footer.</footer>
         </div>
     );
 
