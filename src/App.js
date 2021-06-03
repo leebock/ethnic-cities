@@ -47,10 +47,10 @@ function App() {
     }
     
     return (
-        <>
+        <div className="vh-100 d-flex flex-column">
             <header className="container"><h1>My First React App</h1></header>
-            <div className="container">
-                <div className="row">
+            <div className="container d-flex flex-column flex-grow-1">
+                <div className="row flex-grow-1">
                     <MyMap cities={cities}/>
                 </div>
                 <div className="row">
@@ -62,7 +62,7 @@ function App() {
                 </div>
             </div>
             <footer className="container">This is the footer.</footer>
-        </>
+        </div>
     );
 
 }

@@ -49,6 +49,7 @@ export const MyMap = ({cities}) => {
             _layerGroupRef.current = L.layerGroup(
                 cities.map((city)=>L.marker([city.lat,city.lon]))
             ).addTo(map);
+            map.invalidateSize();
         },
         [cities]
     )
