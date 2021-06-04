@@ -14,11 +14,11 @@ L.Icon.Default.mergeOptions({
 });
 
 
-export const MyMap = ({cities}) => {
+export const MyMap = ({cities, className}) => {
     
     const _mapRef = React.useRef(null);
     const _layerGroupRef = React.useRef(null);
-
+    
     useEffect(
         () => {
             _mapRef.current = L.map('map', {
@@ -54,6 +54,6 @@ export const MyMap = ({cities}) => {
         [cities]
     )
     
-    return (<div id="map"></div>);
+    return (<div id="map" className={className}></div>);
     
 }
