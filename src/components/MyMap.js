@@ -13,14 +13,16 @@ L.Icon.Default.mergeOptions({
     shadowUrl: shadowUrl
 });
 
-
-export const MyMap = ({cities, className}) => {
+export const MyMap = ({cities, selectedId, onSelect, onCancelSelect, className}) => {
     
     const _mapRef = React.useRef(null);
     const _layerGroupRef = React.useRef(null);
+    const _selectCity = React.useRef(onSelect);
+    const _cancelSelect = React.useRef(onCancelSelect);
     
     useEffect(
         () => {
+            console.log("creating map");
             _mapRef.current = L.map('map', {
                   center: [40, -100],
                   zoom: 3,
@@ -32,28 +34,47 @@ export const MyMap = ({cities, className}) => {
                         }
                     )
                   ]
-              });
+              }).on("click", ()=>{_cancelSelect.current();});
+              _layerGroupRef.current = L.featureGroup(
+                  cities.map((city)=>{
+                      const marker = L.marker([city.lat,city.lon]);
+                      marker.properties = city;
+                      marker.bindTooltip(city.name);
+                      marker.bindPopup(city.name,{closeButton: false});
+                      return marker;
+                  })
+              )
+              .addTo(_mapRef.current)
+              .on(
+                  "click", 
+                  (e)=> {
+                      const el = document.querySelector(".leaflet-tooltip");
+                      if (el) {el.remove();}
+                      _selectCity.current(e.layer.properties.id);
+                  }
+              );              
             return () => {_mapRef.current.remove();};
         },
-        []
+        [cities]
     );    
-    
+
     useEffect(
         () => {
+            console.log("updating selected marker ", selectedId);
             const layerGroup = _layerGroupRef.current;
-            const map = _mapRef.current;
-            if (layerGroup) {
-                layerGroup.clearLayers();
-                map.removeLayer(layerGroup);
+            if (selectedId !== -1) {
+                const marker = layerGroup.getLayers()
+                    .filter((layer)=>{return layer.properties.id === selectedId})
+                    .shift();
+                marker.openPopup();
+                _mapRef.current.flyToBounds(
+                    L.latLng(marker.properties.lat, marker.properties.lon).toBounds(2000000)
+                );
             }
-            _layerGroupRef.current = L.layerGroup(
-                cities.map((city)=>L.marker([city.lat,city.lon]))
-            ).addTo(map);
-            map.invalidateSize();
         },
-        [cities]
+        [selectedId]
     )
-    
+        
     return (<div id="map" className={className}></div>);
     
 }
