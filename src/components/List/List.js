@@ -1,6 +1,18 @@
+import {useEffect} from 'react';
 import {ListItem} from './ListItem';
 
 export const List = ({cities, selectedId, className, onSelect, onCancelSelect}) => {
+    
+    useEffect(
+        () => {
+            const el = document.querySelector("button.list-group-item.active");
+            if (el) {
+                el.scrollIntoView({behavior: "smooth", inline: "nearest"});
+            }
+        },
+        [selectedId]
+    )
+    
     return (
         <div className={className}>
         {
