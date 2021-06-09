@@ -28,24 +28,24 @@ function App() {
     }
 
     return (
-        <div className="container vh-100 d-flex flex-column">
-            <header className="row mt-5 mb-3">
-                <h1>My First React App (with Bootstrap!)</h1>
+        <div className="container-fluid vh-100 d-flex flex-column">
+            <header className="row mt-4 mb-3">
+                <h1>Prototype: React / Bootstrap / Leaflet</h1>
             </header>
-            <div className="row d-flex flex-column flex-md-row overflow-hidden">
+            <div className="row flex-grow-1 d-flex flex-column flex-md-row overflow-hidden">
                 <MyMap className="col h-100" 
                     cities={cities} 
                     selectedId={selectedId}
                     onSelect={selectCity} 
                     onCancelSelect={cancelSelect}/>
-                <List className="col h-100 list-group overflow-auto"
+                <List className="col col-xl-3 h-100 list-group overflow-auto"
                     cities={cities}
                     selectedId={selectedId}
                     onSelect={selectCity} 
                     onCancelSelect={cancelSelect}/>
             </div>
-            <footer className="container mb-5">This is the footer.</footer>
-            </div>
+            <footer className="container mt-3 mb-3">This is the footer.</footer>
+        </div>
     );
 
 }
