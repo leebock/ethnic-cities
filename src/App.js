@@ -68,13 +68,17 @@ function App() {
                     selectedId={selectedId}
                     onSelect={selectCity} 
                     onCancelSelect={cancelSelect}/>
-                <List className="col col-xl-3 h-100 list-group overflow-auto"
-                    cities={cities}
-                    selectedId={selectedId}
-                    onSelect={selectCity} 
-                    onCancelSelect={cancelSelect}/>
+                <div className="col col-xl-3 h-100 overflow-hidden d-flex pb-1 pb-md-0 pt-2 pt-md-0">
+                    <List className="list-group w-100 overflow-auto pt-1 pt-md-0"
+                        cities={cities}
+                        selectedId={selectedId}
+                        onSelect={selectCity} 
+                        onCancelSelect={cancelSelect}/>
+                </div>
             </div>
-            <footer className="row mt-3 mb-3"><small className="text-muted">This is the footer.</small></footer>
+            <footer className="row mt-3 mb-3">
+                <small className="text-muted">This is the footer.</small>
+            </footer>
         </div>
     );
 
