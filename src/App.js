@@ -25,14 +25,15 @@ function App() {
                   data => {
                       setCities(
                           data.features.map(
-                            (feature) => {
+                            (feature, idx) => {
                                 return {
                                     id: feature.attributes.FID, 
                                     name: feature.attributes.NAME, 
                                     lat: feature.geometry.y, 
                                     lon: feature.geometry.x,
                                     state: feature.attributes.ST,
-                                    population: feature.attributes.POPULATION
+                                    population: feature.attributes.POPULATION,
+                                    rank: idx+1 
                                 }
                             }  
                           )
