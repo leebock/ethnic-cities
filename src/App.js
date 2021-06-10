@@ -7,6 +7,8 @@ import {useState, useEffect} from "react";
 function App() {
     
     const [cities, setCities] = useState([]);
+    const [sortField, setSortField] = useState("population");
+    const [sortOrder, setSortOrder] = useState("asc");
     
     const service_url  = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0/query";
 
@@ -72,6 +74,14 @@ function App() {
     const cancelSelect = () => {
         setSelectedId(-1);
     }
+    
+    const handleSortChange = (e) => {
+        setSortField(e.target.value);
+    }
+    
+    const handleOrderChange = (e) => {
+        setSortOrder(e.target.value);
+    }
 
     return (
         <div className="container-fluid vh-100 d-flex flex-column">
@@ -85,10 +95,33 @@ function App() {
                     selectedId={selectedId}
                     onSelect={selectCity} 
                     onCancelSelect={cancelSelect}/>
-                <div className="col col-xl-3 h-100 overflow-hidden d-flex pb-1 pb-md-0 pt-2 pt-md-0">
+                <div className="col col-xl-3 h-100 overflow-hidden d-flex flex-column pb-1 pb-md-0 pt-2 pt-md-0">
+                    <div className="input-group mb-2">
+                        <div className="input-group-prepend">
+                            <label className="input-group-text bg-white" htmlFor="inputSort">Sort by:</label>
+                        </div>
+                        <select id="inputSortField"
+                                name="sortField" 
+                                className="custom-select flex-grow-1"
+                                onChange={handleSortChange}>
+                            <option value="population" selected>Total Population</option>
+                            <option value="pct_white">Percent White (2010)</option>
+                            <option value="pct_black">Percent Black (2010)</option>
+                            <option value="pct_asian">Percent Asian (2010)</option>
+                        </select>        
+                        <select id="inputSortOrder"
+                                name="ascDesc" 
+                                className="custom-select"
+                                onChange={handleOrderChange}>
+                            <option value="asc" selected>Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
                     <List className="list-group w-100 overflow-auto pt-1 pt-md-0"
                         cities={cities}
                         selectedId={selectedId}
+                        sortField={sortField}
+                        sortOrder={sortOrder}
                         onSelect={selectCity} 
                         onCancelSelect={cancelSelect}/>
                 </div>
