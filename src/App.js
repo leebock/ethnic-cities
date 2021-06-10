@@ -25,40 +25,59 @@ function App() {
               .then(response => response.json())
               .then(
                   data => {
+
                       setCities(
+
                           data.features.map(
-                            (feature, idx) => {
-                                return {
-                                    id: feature.attributes.FID, 
-                                    name: feature.attributes.NAME, 
-                                    lat: feature.geometry.y, 
-                                    lon: feature.geometry.x,
-                                    state: feature.attributes.ST,
-                                    population: feature.attributes.POPULATION,
-                                    population_2010: feature.attributes.POP2010,
-                                    rank: idx+1,
-                                    white: feature.attributes.WHITE,
-                                    black: feature.attributes.BLACK,
-                                    native_american: feature.attributes.AMERI_ES,
-                                    asian: feature.attributes.ASIAN,
-                                    pacific_islander: feature.attributes.HAWN_PI,
-                                    hispanic: feature.attributes.HISPANIC,
-                                    other: feature.attributes.OTHER,
-                                    multi_race: feature.attributes.MULT_RACE,
-                                    pct_white: feature.attributes.WHITE/feature.attributes.POP2010,
-                                    pct_black: feature.attributes.BLACK/feature.attributes.POP2010,
-                                    pct_native_american: feature.attributes.AMERI_ES/feature.attributes.POP2010,
-                                    pct_asian: feature.attributes.ASIAN/feature.attributes.POP2010,
-                                    pct_pacific_island: feature.attributes.HAWN_PI/feature.attributes.POP2010,
-                                    pct_hispanic: feature.attributes.HISPANIC/feature.attributes.POP2010,
-                                    pct_other: feature.attributes.OTHER/feature.attributes.POP2010,
-                                    pct_multi_race: feature.attributes.MULT_RACE/feature.attributes.POP2010,
-                                    male: feature.attributes.MALES,
-                                    female: feature.attributes.FEMALES                                     
-                                }
-                            }  
+                              (feature, idx)=> {
+                                  const {
+                                      FID, NAME, ST, POPULATION, POP2010, WHITE, BLACK,
+                                      AMERI_ES, ASIAN, HAWN_PI, HISPANIC, OTHER, MULT_RACE,
+                                      MALES, FEMALES
+                                  } = feature.attributes;
+                                  return {
+                                      id: FID,
+                                      name: NAME,
+                                      state: ST,
+                                      lat:feature.geometry.y, 
+                                      lon:feature.geometry.x, 
+                                      rank: idx+1,
+                                      population: POPULATION,
+                                      population_2010: POP2010,
+                                      white: WHITE,
+                                      black: BLACK,
+                                      native_american: AMERI_ES,
+                                      asian: ASIAN,
+                                      pacific_islander: HAWN_PI,
+                                      hispanic: HISPANIC,
+                                      other: OTHER,
+                                      multi_race: MULT_RACE,
+                                      male: MALES,
+                                      female: FEMALES                                     
+                                  };
+                              }
                           )
-                      );
+                          .map(
+                              (attributes)=>{
+                                  const {
+                                      white, black, native_american, population_2010,
+                                      asian, pacific_islander, hispanic, other, multi_race
+                                  } = attributes;
+                                  return{
+                                      ...attributes,
+                                      pct_white: white / population_2010,
+                                      pct_black: black / population_2010,
+                                      pct_native_american: native_american / population_2010,
+                                      pct_asian: asian / population_2010,
+                                      pct_pacific_islander: pacific_islander / population_2010,
+                                      pct_hispanic: hispanic / population_2010,
+                                      pct_other: other / population_2010,
+                                      pct_multi_race: multi_race / population_2010
+                                  };
+                              }
+                          )
+
+                      ); // setCities
                   }
               );
         },
@@ -104,7 +123,7 @@ function App() {
                                 name="sortField" 
                                 className="custom-select flex-grow-1"
                                 onChange={handleSortChange}>
-                            <option value="population" selected>Total Population</option>
+                            <option value="population">Total Population</option>
                             <option value="pct_white">Percent White (2010)</option>
                             <option value="pct_black">Percent Black (2010)</option>
                             <option value="pct_asian">Percent Asian (2010)</option>
@@ -113,7 +132,7 @@ function App() {
                                 name="ascDesc" 
                                 className="custom-select"
                                 onChange={handleOrderChange}>
-                            <option value="asc" selected>Ascending</option>
+                            <option value="asc">Ascending</option>
                             <option value="desc">Descending</option>
                         </select>
                     </div>
