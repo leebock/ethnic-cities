@@ -33,7 +33,26 @@ function App() {
                                     lon: feature.geometry.x,
                                     state: feature.attributes.ST,
                                     population: feature.attributes.POPULATION,
-                                    rank: idx+1 
+                                    population_2010: feature.attributes.POP2010,
+                                    rank: idx+1,
+                                    white: feature.attributes.WHITE,
+                                    black: feature.attributes.BLACK,
+                                    native_american: feature.attributes.AMERI_ES,
+                                    asian: feature.attributes.ASIAN,
+                                    pacific_islander: feature.attributes.HAWN_PI,
+                                    hispanic: feature.attributes.HISPANIC,
+                                    other: feature.attributes.OTHER,
+                                    multi_race: feature.attributes.MULT_RACE,
+                                    pct_white: feature.attributes.WHITE/feature.attributes.POP2010,
+                                    pct_black: feature.attributes.BLACK/feature.attributes.POP2010,
+                                    pct_native_american: feature.attributes.AMERI_ES/feature.attributes.POP2010,
+                                    pct_asian: feature.attributes.ASIAN/feature.attributes.POP2010,
+                                    pct_pacific_island: feature.attributes.HAWN_PI/feature.attributes.POP2010,
+                                    pct_hispanic: feature.attributes.HISPANIC/feature.attributes.POP2010,
+                                    pct_other: feature.attributes.OTHER/feature.attributes.POP2010,
+                                    pct_multi_race: feature.attributes.MULT_RACE/feature.attributes.POP2010,
+                                    male: feature.attributes.MALES,
+                                    female: feature.attributes.FEMALES                                     
                                 }
                             }  
                           )
@@ -42,9 +61,7 @@ function App() {
               );
         },
         []
-    )
-
-
+    );
 
     const [selectedId, setSelectedId] = useState(-1);
 
