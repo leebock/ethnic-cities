@@ -70,6 +70,8 @@ export const MyMap = ({cities, selectedId, onSelect, onCancelSelect, className})
                 _mapRef.current.flyToBounds(
                     L.latLng(marker.properties.lat, marker.properties.lon).toBounds(2000000)
                 );
+            } else {
+                _mapRef.current.closePopup();
             }
         },
         [selectedId]
