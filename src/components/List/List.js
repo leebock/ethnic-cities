@@ -6,6 +6,7 @@ export const List = ({
     selectedId, 
     sortField, 
     sortOrder,
+    fieldAliases,
     className, 
     onSelect, 
     onCancelSelect
@@ -50,6 +51,7 @@ export const List = ({
                             city={city} 
                             selected={city.id === selectedId}
                             sortField={sortField}
+                            fieldAliases={fieldAliases}
                             onSelect={onSelect}/>
                 }
             )

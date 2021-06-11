@@ -1,4 +1,4 @@
-export const ListItem = ({city, selected, sortField, onSelect}) => {
+export const ListItem = ({city, selected, sortField, fieldAliases, onSelect}) => {
     /*
     console.log(
         city.pct_white+
@@ -16,13 +16,13 @@ export const ListItem = ({city, selected, sortField, onSelect}) => {
         <button key={city.id} className={className} onClick={handleItemClick}>
             <h4 className="mb-1">{city.name}</h4>
             <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">{sortField}: {city[sortField].toLocaleString()}</h5>
+                <h5 className="mb-1">{fieldAliases[sortField]}: {city[sortField].toLocaleString()}</h5>
                 <small>Rank: <strong>{(city.rank)}</strong></small>
             </div>
-            <p className="mb-1">Population: <strong>{(city.population).toLocaleString()}</strong></p>
-            <p className="mb-1">Percent white: <strong>{(city.pct_white*100).toLocaleString()}</strong></p>
-            <p className="mb-1">Percent black: <strong>{(city.pct_black*100).toLocaleString()}</strong></p>
-            <p className="mb-1">Percent asian: <strong>{(city.pct_asian*100).toLocaleString()}</strong></p>
+            <p className="mb-1">{fieldAliases.population}: <strong>{(city.population).toLocaleString()}</strong></p>
+            <p className="mb-1">{fieldAliases.pct_white}: <strong>{(city.pct_white*100).toLocaleString()}</strong></p>
+            <p className="mb-1">{fieldAliases.pct_black}: <strong>{(city.pct_black*100).toLocaleString()}</strong></p>
+            <p className="mb-1">{fieldAliases.pct_asian}: <strong>{(city.pct_asian*100).toLocaleString()}</strong></p>
         </button>                        
     );
 };

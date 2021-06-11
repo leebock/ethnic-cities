@@ -12,6 +12,12 @@ function App() {
     const [sortOrder, setSortOrder] = useState("asc");
     
     const service_url  = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0/query";
+    const fieldAliases = {
+        population: "Total Population",
+        pct_white: "Percent White (2010)",
+        pct_black: "Percent Black (2010)",
+        pct_asian: "Percent Asian (2010)"
+    };
 
     useEffect(
         () => {
@@ -86,6 +92,7 @@ function App() {
                         selectedId={selectedId}
                         sortField={sortField}
                         sortOrder={sortOrder}
+                        fieldAliases={fieldAliases}
                         onSelect={selectCity} 
                         onCancelSelect={cancelSelect}/>
                 </div>
