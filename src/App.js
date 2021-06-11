@@ -47,6 +47,7 @@ function App() {
     
     const handleSortChange = (e) => {
         setSortField(e.target.value);
+        setSelectedId(-1);
     }
     
     const handleOrderChange = (e) => {
