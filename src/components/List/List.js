@@ -26,6 +26,13 @@ export const List = ({
         [selectedId]
     )
     
+    useEffect(
+        () => {
+            document.querySelector(".list-group").scroll({top:0, behavior: "smooth"});
+        },
+        [sortField]
+    )
+    
     const sorted = cities
         .slice()
         .sort(
