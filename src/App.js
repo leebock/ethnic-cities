@@ -12,20 +12,27 @@ function App() {
     const [sortOrder, setSortOrder] = useState("asc");
     
     const service_url  = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0/query";
+    
     const fieldAliases = {
         population: "Total Population",
         pct_white: "Percent White (2010)",
         pct_black: "Percent Black (2010)",
-        pct_asian: "Percent Asian (2010)"
+        pct_hispanic: "Percent Hispanic (2010)",
+        pct_asian: "Percent Asian (2010)",
+        pct_pacific_island: "Percent Pacific Islander (2010)",
+        pct_native_american: "Percent Native American (2010)",
+        pct_other: "Percent Other (2010)",
+        pct_multi_race: "Percent Multi-Race (2010)"
     };
 
     useEffect(
         () => {
             fetch(
                 service_url+
-                "?where="+encodeURIComponent("POP_CLASS >= 9")+
+                "?where="+encodeURIComponent("1 = 1")+
                 "&orderByFields="+encodeURIComponent("POPULATION DESC")+
                 "&outFields=*"+
+                "&resultRecordCount=50"+
                 "&outSR=4236"+
                 "&f=pjson"
             )
@@ -75,10 +82,7 @@ function App() {
                                 name="sortField" 
                                 className="custom-select flex-grow-1"
                                 onChange={handleSortChange}>
-                            <option value="population">Total Population</option>
-                            <option value="pct_white">Percent White (2010)</option>
-                            <option value="pct_black">Percent Black (2010)</option>
-                            <option value="pct_asian">Percent Asian (2010)</option>
+                            {Object.keys(fieldAliases).map((key) => <option value={key}>{fieldAliases[key]}</option>)}
                         </select>        
                         <select id="inputSortOrder"
                                 name="ascDesc" 
