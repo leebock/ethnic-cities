@@ -11,12 +11,16 @@ export const List = ({
     onSelect, 
     onCancelSelect
 }) => {
+    
     console.log("--> updating list");
+
     useEffect(
         () => {
             const el = document.querySelector("button.list-group-item.active");
             if (el) {
                 el.scrollIntoView({behavior: "smooth", inline: "nearest"});
+            } else {
+                document.querySelector(".list-group").scroll({top:0, behavior: "smooth"});
             }
         },
         [selectedId]
