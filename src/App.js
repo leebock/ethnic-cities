@@ -73,7 +73,7 @@ function App() {
                     selectedId={selectedId}
                     onSelect={selectCity} 
                     onCancelSelect={cancelSelect}/>
-                <div className="col col-xl-3 h-100 overflow-hidden d-flex flex-column pb-1 pb-md-0 pt-2 pt-md-0">
+                <div className="col col-xl-4 h-100 overflow-hidden d-flex flex-column pb-1 pb-md-0 pt-2 pt-md-0">
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                             <label className="input-group-text bg-white" htmlFor="inputSort">Sort by:</label>
@@ -82,7 +82,7 @@ function App() {
                                 name="sortField" 
                                 className="custom-select flex-grow-1"
                                 onChange={handleSortChange}>
-                            {Object.keys(fieldAliases).map((key) => <option value={key}>{fieldAliases[key]}</option>)}
+                            {Object.keys(fieldAliases).map((key,idx) => <option key={idx} value={key}>{fieldAliases[key]}</option>)}
                         </select>        
                         <select id="inputSortOrder"
                                 name="ascDesc" 
