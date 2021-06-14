@@ -15,14 +15,14 @@ function App() {
     
     const fieldAliases = {
         population: "Total Population",
-        pct_white: "Percent White (2010)",
-        pct_black: "Percent Black (2010)",
-        pct_hispanic: "Percent Hispanic (2010)",
-        pct_asian: "Percent Asian (2010)",
-        pct_pacific_island: "Percent Pacific Islander (2010)",
-        pct_native_american: "Percent Native American (2010)",
-        pct_other: "Percent Other (2010)",
-        pct_multi_race: "Percent Multi-Race (2010)"
+        /*pct_white: "Percent White",*/
+        pct_black: "Percent Black",
+        pct_hispanic: "Percent Hispanic",
+        pct_asian: "Percent Asian",
+        pct_pacific_islander: "Percent Pacific Islander",
+        pct_native_american: "Percent Native American"/*,
+        pct_other: "Percent Other",
+        pct_multi_race: "Percent Multi-Race"*/
     };
 
     useEffect(
