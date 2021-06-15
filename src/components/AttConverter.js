@@ -33,7 +33,7 @@ export const AttConverter = (features) => {
         (attributes)=>{
             const {
                 white, black, native_american, population_2010,
-                asian, pacific_islander, hispanic, other, multi_race
+                asian, pacific_islander, hispanic, other, multi_race, male, female
             } = attributes;
             return{
                 ...attributes,
@@ -44,7 +44,9 @@ export const AttConverter = (features) => {
                 pct_pacific_islander: pacific_islander / population_2010,
                 pct_hispanic: hispanic / population_2010,
                 pct_other: other / population_2010,
-                pct_multi_race: multi_race / population_2010
+                pct_multi_race: multi_race / population_2010,
+                pct_male: male / population_2010,
+                pct_female: female / population_2010
             };
         }
     );
