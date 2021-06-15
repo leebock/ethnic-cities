@@ -22,7 +22,7 @@ export const MyMap = ({cities, selectedId, onSelect, onCancelSelect, className})
     
     useEffect(
         () => {
-            console.log("creating map");
+            console.log("map::creating map");
             _mapRef.current = L.map('map', {
                   center: [40, -100],
                   zoom: 3,
@@ -35,32 +35,42 @@ export const MyMap = ({cities, selectedId, onSelect, onCancelSelect, className})
                     )
                   ]
               }).on("click", ()=>{_cancelSelect.current();});
-              _layerGroupRef.current = L.featureGroup(
-                  cities.map((city)=>{
-                      const marker = L.marker([city.lat,city.lon]);
-                      marker.properties = city;
-                      marker.bindTooltip(city.name);
-                      marker.bindPopup(city.name,{closeButton: false});
-                      return marker;
-                  })
-              )
-              .addTo(_mapRef.current)
-              .on(
-                  "click", 
-                  (e)=> {
-                      const el = document.querySelector(".leaflet-tooltip");
-                      if (el) {el.remove();}
-                      _selectCity.current(e.layer.properties.id);
-                  }
-              );              
             return () => {_mapRef.current.remove();};
+        },
+        []
+    );
+    
+    useEffect(
+        () => {
+            console.log("map::creating layerGroup");
+            if (_layerGroupRef.current) {
+                _mapRef.current.removeLayer(_layerGroupRef.current);
+            }
+            _layerGroupRef.current = L.featureGroup(
+                cities.map((city)=>{
+                    const marker = L.marker([city.lat,city.lon]);
+                    marker.properties = city;
+                    marker.bindTooltip(city.name);
+                    marker.bindPopup(city.name,{closeButton: false});
+                    return marker;
+                })
+            )
+            .addTo(_mapRef.current)
+            .on(
+                "click", 
+                (e)=> {
+                    const el = document.querySelector(".leaflet-tooltip");
+                    if (el) {el.remove();}
+                    _selectCity.current(e.layer.properties.id);
+                }
+            );
         },
         [cities]
     );    
 
     useEffect(
         () => {
-            console.log("updating selected marker ", selectedId);
+            console.log("map::updating selected marker ", selectedId);
             const layerGroup = _layerGroupRef.current;
             if (selectedId !== -1) {
                 const marker = layerGroup.getLayers()
