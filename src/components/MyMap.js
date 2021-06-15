@@ -1,19 +1,14 @@
 import React, { useEffect } from 'react';
 import L from 'leaflet';
 
-import iconUrl from 'leaflet/dist/images/marker-icon.png';
-import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
-import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
-
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: iconRetinaUrl, 
-    iconUrl: iconUrl, 
-    shadowUrl: shadowUrl
-});
-
-export const MyMap = ({cities, selectedId, onSelect, onCancelSelect, className}) => {
+export const MyMap = ({
+        cities, 
+        selectedId, 
+        sortField, 
+        onSelect, 
+        onCancelSelect, 
+        className
+    }) => {
     
     const _mapRef = React.useRef(null);
     const _layerGroupRef = React.useRef(null);
@@ -42,13 +37,58 @@ export const MyMap = ({cities, selectedId, onSelect, onCancelSelect, className})
     
     useEffect(
         () => {
+
+            if (cities.length === 0) {
+                return;
+            }
+
             console.log("map::creating layerGroup");
+            
+            const sorted = cities
+                .slice()
+                .sort(
+                    (a,b) => {
+                        if (a[sortField] > b[sortField]) {
+                            return -1;
+                        }
+                        if (a[sortField] < b[sortField]) {
+                            return 1
+                        }
+                        return 0;
+                    }
+                )
+                .map((item, idx)=>{return {...item, rank: idx+1};})
+                .sort(
+                    (a,b) => {
+                        if (a.population_2010 > b.population_2010) {
+                            return -1;
+                        }
+                        if (a.population_2010 < b.population_2010) {
+                            return 1
+                        }
+                        return 0;
+                    }
+                );
+
+            const MAX_POP = cities[0].population_2010;
+
             if (_layerGroupRef.current) {
                 _mapRef.current.removeLayer(_layerGroupRef.current);
             }
+
             _layerGroupRef.current = L.featureGroup(
-                cities.map((city)=>{
-                    const marker = L.marker([city.lat,city.lon]);
+                sorted.map((city)=>{
+                    const marker = L.circleMarker(
+                        [city.lat,city.lon],
+                        {
+							radius: calcRadius(city.population_2010),
+							weight: 1,
+							opacity: 1,
+							fillOpacity: sortField === "population_2010" 
+                                        ? 0.8 : 
+                                        (sorted.length - city.rank) / sorted.length
+						}                        
+                    );
                     marker.properties = city;
                     marker.bindTooltip(city.name);
                     marker.bindPopup(city.name,{closeButton: false});
@@ -64,8 +104,19 @@ export const MyMap = ({cities, selectedId, onSelect, onCancelSelect, className})
                     _selectCity.current(e.layer.properties.id);
                 }
             );
+            
+            _mapRef.current.fitBounds(_layerGroupRef.current.getBounds());
+            
+            function calcRadius(confirmed)
+			{
+				var r = 1;
+				var R = 35;
+				var x = confirmed / MAX_POP;
+				return ( (R - r) * Math.pow(x-1,5) + R );
+			}
+            
         },
-        [cities]
+        [cities, sortField]
     );    
 
     useEffect(

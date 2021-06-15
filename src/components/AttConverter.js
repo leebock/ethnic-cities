@@ -3,7 +3,7 @@ export const AttConverter = (features) => {
     return features.map(
         (feature, idx)=> {
             const {
-                FID, NAME, ST, POPULATION, POP2010, WHITE, BLACK,
+                FID, NAME, ST, POP2010, WHITE, BLACK,
                 AMERI_ES, ASIAN, HAWN_PI, HISPANIC, OTHER, MULT_RACE,
                 MALES, FEMALES
             } = feature.attributes;
@@ -14,8 +14,7 @@ export const AttConverter = (features) => {
                 lat:feature.geometry.y, 
                 lon:feature.geometry.x, 
                 rank: idx+1,
-                population: POPULATION,
-                population_2010: POP2010,
+                population_2010: parseInt(POP2010),
                 white: WHITE,
                 black: BLACK,
                 native_american: AMERI_ES,

@@ -9,20 +9,18 @@ function App() {
     
     const [cities, setCities] = useState([]);
     const [selectedId, setSelectedId] = useState(-1);
-    const [sortField, setSortField] = useState("population");
+    const [sortField, setSortField] = useState("population_2010");
     const [sortAscending, setSortAscending] = useState(true);
     
     const service_url  = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0/query";
     
     const fieldAliases = {
-        population: "Total Population",
+        population_2010: "Total Population",
         pct_black: "Percent Black",
         pct_hispanic: "Percent Hispanic",
         pct_asian: "Percent Asian",
         pct_pacific_islander: "Percent Pacific Islander",
-        pct_native_american: "Percent Native American",
-        pct_male: "Percent Male",
-        pct_female: "Percent Female"
+        pct_native_american: "Percent Native American"
     };
 
     useEffect(
@@ -71,6 +69,7 @@ function App() {
                 <MyMap className="col h-100" 
                     cities={cities} 
                     selectedId={selectedId}
+                    sortField={sortField}                    
                     onSelect={selectCity} 
                     onCancelSelect={cancelSelect}/>
                 <div className="col col-xl-4 h-100 overflow-hidden d-flex flex-column pb-1 pb-md-0 pt-2 pt-md-0">
