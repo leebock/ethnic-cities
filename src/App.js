@@ -9,7 +9,7 @@ function App() {
     
     const [cities, setCities] = useState([]);
     const [sortField, setSortField] = useState("population");
-    const [sortOrder, setSortOrder] = useState("asc");
+    const [sortAscending, setSortAscending] = useState(true);
     
     const service_url  = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0/query";
     
@@ -57,8 +57,10 @@ function App() {
         setSelectedId(-1);
     }
     
-    const handleOrderChange = (e) => {
-        setSortOrder(e.target.value);
+    const handleOrderButtonClick = (e) => {
+        setSortAscending(!sortAscending);
+        const bgImg = sortAscending ? "./sort-down.svg" : "./sort-up.svg" ;
+        document.getElementById("buttonSortOrder").style.backgroundImage = "url('"+bgImg+"')";
     }
 
     return (
@@ -74,29 +76,43 @@ function App() {
                     onSelect={selectCity} 
                     onCancelSelect={cancelSelect}/>
                 <div className="col col-xl-4 h-100 overflow-hidden d-flex flex-column pb-1 pb-md-0 pt-2 pt-md-0">
-                    <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                            <label className="input-group-text bg-white" htmlFor="inputSort">Sort by:</label>
-                        </div>
+                    <div className="d-flex mb-2 pt-1">
+                        <label className="input-group-text bg-white" 
+                                style={{"border": "none"}}
+                                htmlFor="inputSort">Sort by:</label>
                         <select id="inputSortField"
                                 name="sortField" 
-                                className="custom-select flex-grow-1"
+                                className="custom-select flex-grow-1 mr-2"
                                 onChange={handleSortChange}>
-                            {Object.keys(fieldAliases).map((key,idx) => <option key={idx} value={key}>{fieldAliases[key]}</option>)}
+                            {
+                                Object.keys(fieldAliases).map(
+                                    (key,idx) => <option key={idx} value={key}>
+                                        {fieldAliases[key]}
+                                        </option>
+                                )
+                            }
                         </select>        
-                        <select id="inputSortOrder"
-                                name="ascDesc" 
-                                className="custom-select"
-                                onChange={handleOrderChange}>
-                            <option value="asc">Ascending</option>
-                            <option value="desc">Descending</option>
-                        </select>
+                        <button type="button"
+                                id="buttonSortOrder"
+                                className="btn btn-outline-secondary"
+                                style={
+                                    {
+                                        "backgroundImage": "url('./sort-up.svg')", 
+                                        "backgroundRepeat": "no-repeat",
+                                        "backgroundSize": "contain",
+                                        "backgroundPosition": "center",
+                                        "minWidth": "50px",
+                                        "marginLeft": "7px"
+                                    }
+                                }
+                                onClick={handleOrderButtonClick}>
+                        </button>
                     </div>
                     <List className="list-group w-100 overflow-auto pt-1 pt-md-0"
                         cities={cities}
                         selectedId={selectedId}
                         sortField={sortField}
-                        sortOrder={sortOrder}
+                        sortAscending={sortAscending}
                         fieldAliases={fieldAliases}
                         onSelect={selectCity} 
                         onCancelSelect={cancelSelect}/>

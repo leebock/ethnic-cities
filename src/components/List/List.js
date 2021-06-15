@@ -5,7 +5,7 @@ export const List = ({
     cities, 
     selectedId, 
     sortField, 
-    sortOrder,
+    sortAscending,
     fieldAliases,
     className, 
     onSelect, 
@@ -48,7 +48,7 @@ export const List = ({
         )
         .map((item, idx)=>{return {...item, rank: idx+1};});
     
-    if (sortOrder === "desc") {
+    if (!sortAscending) {
         sorted.reverse();
     }
     
