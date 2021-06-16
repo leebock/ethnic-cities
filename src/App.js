@@ -3,6 +3,8 @@ import {AttConverter} from './components/AttConverter';
 import {List} from './components/List/List';
 import {MyMap} from './components/MyMap';
 import {useState, useEffect} from "react";    
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import classBreaks from "@arcgis/core/smartMapping/statistics/classBreaks";
 
 function App() {
     
@@ -10,6 +12,7 @@ function App() {
     const [selectedId, setSelectedId] = useState(-1);
     const [sortField, setSortField] = useState("population_2010");
     const [sortAscending, setSortAscending] = useState(true);
+    const [breaks, setBreaks] = useState({});
     
     const service_url  = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0/query";
     
@@ -21,19 +24,70 @@ function App() {
         pct_pacific_islander: "Percent Pacific Islander",
         pct_native_american: "Percent Native American"
     };
+    
+    const MIN_POP = 350000;
 
     useEffect(
         () => {
             fetch(
                 service_url+
-                "?where="+encodeURIComponent("POP2010 > 350000")+
+                "?where="+encodeURIComponent("POP2010 > "+MIN_POP)+
                 "&orderByFields="+encodeURIComponent("POP2010 DESC")+
                 "&outFields=*"+
                 "&outSR=4236"+
                 "&f=pjson"
             )
               .then(response => response.json())
-              .then(data => {setCities(AttConverter(data.features));});
+              .then(data => {setCities(AttConverter(data.features));});    
+              
+          const layer = new FeatureLayer({
+              url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0",
+              definitionExpression: "POP2010 > "+MIN_POP
+          });
+      
+          const params = {
+              layer: layer,
+              field: "",
+              normalizationField: "POP2010",
+              classificationMethod: "natural-breaks",
+              numClasses: 5		
+          };    
+
+          classBreaks({...params, field: "BLACK"})
+          .then(
+              (response)=>{
+                  setBreaks(prevState=>{return {...prevState, pct_black: response.classBreakInfos}})
+              }
+          );
+
+          classBreaks({...params, field: "HISPANIC"})
+          .then(
+              (response)=>{
+                  setBreaks(prevState=>{return {...prevState, pct_hispanic: response.classBreakInfos}})
+              }
+          );
+
+          classBreaks({...params, field: "ASIAN"})
+          .then(
+              (response)=>{
+                  setBreaks(prevState=>{return {...prevState, pct_asian: response.classBreakInfos}})
+              }
+          );
+
+          classBreaks({...params, field: "HAWN_PI"})
+          .then(
+              (response)=>{
+                  setBreaks(prevState=>{return {...prevState, pct_pacific_islander: response.classBreakInfos}})
+              }
+          );
+
+          classBreaks({...params, field: "AMERI_ES"})
+          .then(
+              (response)=>{
+                  setBreaks(prevState=>{return {...prevState, pct_native_american: response.classBreakInfos}})
+              }
+          );
+        
         },
         []
     );
@@ -65,7 +119,8 @@ function App() {
             </header>
             <div className="row flex-grow-1 d-flex flex-column flex-md-row overflow-hidden">
                 <MyMap className="col h-100" 
-                    cities={cities} 
+                    cities={cities}
+                    breaks={breaks} 
                     selectedId={selectedId}
                     sortField={sortField}                    
                     onSelect={selectCity} 

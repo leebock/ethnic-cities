@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import L from 'leaflet';
 
 export const MyMap = ({
-        cities, 
+        cities,
+        breaks, 
         selectedId, 
         sortField, 
         onSelect, 
@@ -76,17 +77,33 @@ export const MyMap = ({
                 _mapRef.current.removeLayer(_layerGroupRef.current);
             }
 
+            const breakInfo = breaks[sortField];
+
             _layerGroupRef.current = L.featureGroup(
                 sorted.map((city)=>{
+                    let range = null;
+                    if (breakInfo) {
+                        range = breakInfo.reduce(
+                            (accumulator, current, idx)=>{
+                                if (city[sortField]>current.minValue) {
+                                    accumulator = idx;
+                                }
+                                return accumulator;
+                            },
+                            0
+                        );
+                    }
+                    const colors = ["#feebe2", "#fbb4b9", "#f768a1", "#c51b8a", "#7a0177"];
+                    const color = range === null ? "gray" : colors[range];
                     const marker = L.circleMarker(
                         [city.lat,city.lon],
                         {
 							radius: calcRadius(city.population_2010),
+                            color: "black",
 							weight: 1,
 							opacity: 1,
-							fillOpacity: sortField === "population_2010" 
-                                        ? 0.8 : 
-                                        (sorted.length - city.rank) / sorted.length
+							fillOpacity: 0.8,
+                            fillColor: color
 						}                        
                     );
                     marker.properties = city;
@@ -116,7 +133,7 @@ export const MyMap = ({
 			}
             
         },
-        [cities, sortField]
+        [cities, breaks, sortField]
     );    
 
     useEffect(
