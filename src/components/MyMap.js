@@ -90,7 +90,7 @@ export const MyMap = ({
 						}                        
                     );
                     marker.properties = city;
-                    marker.bindTooltip(city.name);
+                    marker.bindTooltip(city.name+": "+city.rank);
                     marker.bindPopup(city.name,{closeButton: false});
                     return marker;
                 })
