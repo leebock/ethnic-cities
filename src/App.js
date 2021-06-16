@@ -4,7 +4,6 @@ import {List} from './components/List/List';
 import {MyMap} from './components/MyMap';
 import {useState, useEffect} from "react";    
 
-
 function App() {
     
     const [cities, setCities] = useState([]);
@@ -27,10 +26,9 @@ function App() {
         () => {
             fetch(
                 service_url+
-                "?where="+encodeURIComponent("1 = 1")+
-                "&orderByFields="+encodeURIComponent("POPULATION DESC")+
+                "?where="+encodeURIComponent("POP2010 > 350000")+
+                "&orderByFields="+encodeURIComponent("POP2010 DESC")+
                 "&outFields=*"+
-                "&resultRecordCount=50"+
                 "&outSR=4236"+
                 "&f=pjson"
             )
