@@ -54,41 +54,24 @@ function App() {
               classificationMethod: "natural-breaks",
               numClasses: 5		
           };    
-
-          classBreaks({...params, field: "BLACK"})
-          .then(
-              (response)=>{
-                  setBreaks(prevState=>{return {...prevState, pct_black: response.classBreakInfos}})
-              }
-          );
-
-          classBreaks({...params, field: "HISPANIC"})
-          .then(
-              (response)=>{
-                  setBreaks(prevState=>{return {...prevState, pct_hispanic: response.classBreakInfos}})
-              }
-          );
-
-          classBreaks({...params, field: "ASIAN"})
-          .then(
-              (response)=>{
-                  setBreaks(prevState=>{return {...prevState, pct_asian: response.classBreakInfos}})
-              }
-          );
-
-          classBreaks({...params, field: "HAWN_PI"})
-          .then(
-              (response)=>{
-                  setBreaks(prevState=>{return {...prevState, pct_pacific_islander: response.classBreakInfos}})
-              }
-          );
-
-          classBreaks({...params, field: "AMERI_ES"})
-          .then(
-              (response)=>{
-                  setBreaks(prevState=>{return {...prevState, pct_native_american: response.classBreakInfos}})
-              }
-          );
+          
+          const correspondences = {
+              pct_black: "BLACK", 
+              pct_hispanic: "HISPANIC", 
+              pct_asian: "ASIAN",
+              pct_pacific_islander: "HAWN_PI",
+              pct_native_american: "AMERI_ES"
+          };
+          Object.keys(correspondences).forEach((item, i) => {
+              classBreaks({...params, field: correspondences[item]})
+              .then(
+                  (response)=>{
+                      const newEntry = {};
+                      newEntry[item] = response.classBreakInfos;
+                      setBreaks(prevState=>Object.assign(prevState, newEntry));
+                  }
+              );
+          });
         
         },
         []
