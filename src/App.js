@@ -99,8 +99,12 @@ function App() {
     return (
         <div className="container-fluid vh-100 d-flex flex-column">
             <header className="row mt-4 mb-3">
-                <h1 className="d-none d-md-block">Prototype: React / Bootstrap / Leaflet</h1>
-                <h1 className="h4 d-block d-md-none">Prototype: React / Bootstrap / Leaflet</h1>
+                <h1 className="d-none d-md-block">
+                Ethnicity and America's 50 most populous cities
+                </h1>
+                <h1 className="h4 d-block d-md-none">
+                Ethnicity and America's 50 most populous cities
+                </h1>
             </header>
             <div className="row flex-grow-1 d-flex flex-column flex-md-row overflow-hidden">
                 <div className="col h-100 d-flex flex-column px-0 position-relative">
@@ -165,7 +169,7 @@ function App() {
                 </div>
             </div>
             <footer className="row mt-3 mb-3">
-                <small className="text-muted">This is the footer.</small>
+                <small className="text-muted">All data based on 2010 Census (via Esri's Living Atlas).  This application was built using React, Bootstrap, ArcGIS API for Javascript, and Leaflet.</small>
             </footer>
         </div>
     );
