@@ -118,7 +118,7 @@ function App() {
                         onCancelSelect={cancelSelect}/>
                     {
                         breaks[sortField] &&
-                        <Legend className="position-absolute d-flex flex-column p-1" 
+                        <Legend className="position-absolute d-flex flex-column p-2 pb-0" 
                                 breaks={breaks} 
                                 sortField={sortField}
                                 fieldAliases={fieldAliases}
