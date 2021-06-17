@@ -127,7 +127,7 @@ function App() {
                 </div>
                 <div className="col col-xl-4 h-100 overflow-hidden d-flex flex-column pb-1 pb-md-0 pt-2 pt-md-0">
                     <div className="d-flex mb-2 pt-1">
-                        <label className="input-group-text bg-white" 
+                        <label className="input-group-text bg-white d-none d-sm-block" 
                                 style={{"border": "none"}}
                                 htmlFor="inputSort">Showing:</label>
                         <select id="inputSortField"
