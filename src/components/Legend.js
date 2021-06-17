@@ -19,7 +19,9 @@ export const Legend = ({breaks, sortField, fieldAliases, colors, className}) => 
                     breakInfo.map(
                         (item, idx)=> 
                         (
-                            <li key={idx} className="d-flex align-items-center" style={{"listStyleType": "none"}}>
+                            <li key={idx} 
+                                className="d-flex align-items-center" 
+                                style={{"listStyleType": "none"}}>
                                 <div className="swatch flex-shrink-0" 
                                     style={{
                                         "backgroundColor": colors[idx],
@@ -31,7 +33,13 @@ export const Legend = ({breaks, sortField, fieldAliases, colors, className}) => 
                                         "marginLeft": "4px",
                                         "marginRight": "5px"
                                     }}/>
-                                <span>{(item.minValue*100).toFixed(2)+" - "+(item.maxValue*100).toFixed(2)}</span>
+                                <span>
+                                    {
+                                        (item.minValue*100).toFixed(2)+
+                                        " - "+
+                                        (item.maxValue*100).toFixed(2)
+                                    }
+                                </span>
                             </li>
                         )
                     )
