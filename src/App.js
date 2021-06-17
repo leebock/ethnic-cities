@@ -2,6 +2,7 @@ import './App.css';
 import {AttConverter} from './components/AttConverter';
 import {List} from './components/List/List';
 import {MyMap} from './components/MyMap';
+import {Legend} from './components/Legend';
 import {useState, useEffect} from "react";    
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import classBreaks from "@arcgis/core/smartMapping/statistics/classBreaks";
@@ -26,6 +27,7 @@ function App() {
     };
     
     const MIN_POP = 350000;
+    const COLORS = ["#feebe2", "#fbb4b9", "#f768a1", "#c51b8a", "#7a0177"];
 
     useEffect(
         () => {
@@ -118,18 +120,29 @@ function App() {
                 <h1 className="h4 d-block d-md-none">Prototype: React / Bootstrap / Leaflet</h1>
             </header>
             <div className="row flex-grow-1 d-flex flex-column flex-md-row overflow-hidden">
-                <MyMap className="col h-100" 
-                    cities={cities}
-                    breaks={breaks} 
-                    selectedId={selectedId}
-                    sortField={sortField}                    
-                    onSelect={selectCity} 
-                    onCancelSelect={cancelSelect}/>
+                <div className="col h-100 d-flex flex-column px-0 position-relative">
+                    <MyMap className="flex-grow-1" 
+                        cities={cities}
+                        breaks={breaks} 
+                        colors={COLORS}
+                        selectedId={selectedId}
+                        sortField={sortField}                    
+                        onSelect={selectCity} 
+                        onCancelSelect={cancelSelect}/>
+                    {
+                        breaks[sortField] &&
+                        <Legend className="position-absolute d-flex flex-column p-1" 
+                                breaks={breaks} 
+                                sortField={sortField}
+                                fieldAliases={fieldAliases}
+                                colors={COLORS} />
+                    }
+                </div>
                 <div className="col col-xl-4 h-100 overflow-hidden d-flex flex-column pb-1 pb-md-0 pt-2 pt-md-0">
                     <div className="d-flex mb-2 pt-1">
                         <label className="input-group-text bg-white" 
                                 style={{"border": "none"}}
-                                htmlFor="inputSort">Sort by:</label>
+                                htmlFor="inputSort">Showing:</label>
                         <select id="inputSortField"
                                 name="sortField" 
                                 className="custom-select flex-grow-1 mr-2"

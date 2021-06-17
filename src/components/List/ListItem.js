@@ -3,8 +3,13 @@ export const ListItem = ({city, selected, sortField, fieldAliases, onSelect}) =>
     const handleItemClick = (event) => {onSelect(city.id);};    
     const className = "list-group-item list-group-item-action d-flex flex-column align-items-start"+(selected ? " active" : "");
     const formatValue = (field) => {
-        return (city[field] * (field.includes("pct") ? 100 : 1)).toLocaleString() + 
-                (field.includes("pct") ? "%" : "");
+        let formatted = city[field];
+        if (field.includes("pct")) {
+            formatted = (formatted * 100).toFixed(2)+"%";
+        } else {
+            formatted = formatted.toLocaleString();
+        }
+        return formatted;
     }
 
     return (

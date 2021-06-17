@@ -4,6 +4,7 @@ import L from 'leaflet';
 export const MyMap = ({
         cities,
         breaks, 
+        colors,
         selectedId, 
         sortField, 
         onSelect, 
@@ -29,8 +30,12 @@ export const MyMap = ({
                             attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
                         }
                     )
-                  ]
-              }).on("click", ()=>{_cancelSelect.current();});
+                ],
+                attributionControl: false
+            }).on("click", ()=>{_cancelSelect.current();});
+            L.control.attribution({
+                position: 'topright'
+            }).addTo(_mapRef.current);
             return () => {_mapRef.current.remove();};
         },
         []
@@ -93,7 +98,6 @@ export const MyMap = ({
                             0
                         );
                     }
-                    const colors = ["#feebe2", "#fbb4b9", "#f768a1", "#c51b8a", "#7a0177"];
                     const color = range === null ? "gray" : colors[range];
                     const marker = L.circleMarker(
                         [city.lat,city.lon],
@@ -133,7 +137,7 @@ export const MyMap = ({
 			}
             
         },
-        [cities, breaks, sortField]
+        [cities, breaks, colors, sortField]
     );    
 
     useEffect(
