@@ -170,7 +170,7 @@ function App() {
                         onCancelSelect={cancelSelect}/>
                 </div>
             </div>
-            <footer className="row mt-3 mb-3">
+            <footer className="row mt-3 mb-5 mb-md-3">
                 <small className="text-muted">All data based on 2010 Census (via Esri's Living Atlas).  This application was built using React, Bootstrap, ArcGIS API for Javascript, and Leaflet.</small>
             </footer>
         </div>
