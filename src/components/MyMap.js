@@ -111,8 +111,15 @@ export const MyMap = ({
 						}                        
                     );
                     marker.properties = city;
-                    marker.bindTooltip(city.name+": "+city.rank);
-                    marker.bindPopup(city.name,{closeButton: false});
+                    marker.bindTooltip(city.name+" (#"+city.rank+")");
+                    var temp = sortField.includes("pct") ? (city[sortField]*100).toFixed(2)+"%" : city[sortField].toLocaleString();
+                    marker.bindPopup(
+                        city.name+"<br/>"+
+                        "Rank: "+city.rank+"<br/>"+
+                        temp
+                        ,
+                        {closeButton: false}
+                    );
                     return marker;
                 })
             )
