@@ -14,6 +14,7 @@ export const MyMap = ({
     
     const _mapRef = React.useRef(null);
     const _layerGroupRef = React.useRef(null);
+    const _colorsRef = React.useRef(colors);
     const _selectCity = React.useRef(onSelect);
     const _cancelSelect = React.useRef(onCancelSelect);
     
@@ -98,7 +99,7 @@ export const MyMap = ({
                             0
                         );
                     }
-                    const color = range === null ? "gray" : colors[range];
+                    const color = range === null ? "gray" : _colorsRef.current[range];
                     const marker = L.circleMarker(
                         [city.lat,city.lon],
                         {
@@ -144,7 +145,7 @@ export const MyMap = ({
 			}
             
         },
-        [cities, breaks, colors, sortField]
+        [cities, breaks, sortField]
     );    
 
     useEffect(
