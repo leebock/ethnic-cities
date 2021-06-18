@@ -154,6 +154,7 @@ function App() {
                                         "backgroundSize": "contain",
                                         "backgroundPosition": "center",
                                         "minWidth": "50px",
+                                        "minHeight": "40px",
                                         "marginLeft": "7px"
                                     }
                                 }
