@@ -99,7 +99,7 @@ function App() {
     return (
         <div className="container-fluid vh-100 d-flex flex-column">
             <header className="row mt-4 mb-3">
-                <h1 className="d-none d-md-block">
+                <h1 className="h2 d-none d-md-block">
                 Ethnicity and America's 50 most populous cities
                 </h1>
                 <h1 className="h4 d-block d-md-none">
