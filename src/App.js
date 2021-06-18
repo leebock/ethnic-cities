@@ -31,47 +31,49 @@ function App() {
 
     useEffect(
         () => {
-            fetch(
-                service_url+
-                "?where="+encodeURIComponent("POP2010 > "+MIN_POP)+
-                "&orderByFields="+encodeURIComponent("POP2010 DESC")+
-                "&outFields=*"+
-                "&outSR=4236"+
-                "&f=pjson"
-            )
-              .then(response => response.json())
-              .then(data => {setCities(AttConverter(data.features));});    
+            
+        fetch(
+            service_url+
+            "?where="+encodeURIComponent("POP2010 > "+MIN_POP)+
+            "&orderByFields="+encodeURIComponent("POP2010 DESC")+
+            "&outFields=*"+
+            "&outSR=4236"+
+            "&f=pjson"
+        )
+          .then(response => response.json())
+          .then(data => {setCities(AttConverter(data.features));});    
               
-          const layer = new FeatureLayer({
-              url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0",
-              definitionExpression: "POP2010 > "+MIN_POP
-          });
+        const layer = new FeatureLayer({
+          url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0",
+          definitionExpression: "POP2010 > "+MIN_POP
+        });
       
-          const params = {
-              layer: layer,
-              field: "",
-              normalizationField: "POP2010",
-              classificationMethod: "natural-breaks",
-              numClasses: 5		
-          };    
-          
-          const correspondences = {
-              pct_black: "BLACK", 
-              pct_hispanic: "HISPANIC", 
-              pct_asian: "ASIAN",
-              pct_pacific_islander: "HAWN_PI",
-              pct_native_american: "AMERI_ES"
-          };
-          Object.keys(correspondences).forEach((item, i) => {
-              classBreaks({...params, field: correspondences[item]})
-              .then(
-                  (response)=>{
-                      const newEntry = {};
-                      newEntry[item] = response.classBreakInfos;
-                      setBreaks(prevState=>Object.assign(prevState, newEntry));
-                  }
-              );
-          });
+        const params = {
+          layer: layer,
+          field: "",
+          normalizationField: "POP2010",
+          classificationMethod: "natural-breaks",
+          numClasses: 5		
+        };    
+
+        const correspondences = {
+          pct_black: "BLACK", 
+          pct_hispanic: "HISPANIC", 
+          pct_asian: "ASIAN",
+          pct_pacific_islander: "HAWN_PI",
+          pct_native_american: "AMERI_ES"
+        };
+        
+        Object.keys(correspondences).forEach((item, i) => {
+          classBreaks({...params, field: correspondences[item]})
+          .then(
+              (response)=>{
+                  const newEntry = {};
+                  newEntry[item] = response.classBreakInfos;
+                  setBreaks(prevState=>Object.assign(prevState, newEntry));
+              }
+          );
+        });
         
         },
         []
