@@ -3,8 +3,6 @@ import React from 'react';
 export const Legend = ({breaks, sortField, fieldAliases, colors, className}) => {
 
     const breakInfo = breaks[sortField] || [];
-    console.log("legend::updating");
-    console.log(breakInfo);
     return (
         <div className={className} 
             style={{
