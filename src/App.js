@@ -64,13 +64,15 @@ function App() {
           pct_native_american: "AMERI_ES"
         };
         
+        const obj = {};
         Object.keys(correspondences).forEach((item, i) => {
           classBreaks({...params, field: correspondences[item]})
           .then(
               (response)=>{
-                  const newEntry = {};
-                  newEntry[item] = response.classBreakInfos;
-                  setBreaks(prevState=>Object.assign(prevState, newEntry));
+                  obj[item] = response.classBreakInfos;
+                  if (i === Object.keys(correspondences).length-1) {
+                      setBreaks(obj);
+                  }
               }
           );
         });
