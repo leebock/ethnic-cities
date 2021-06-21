@@ -1,11 +1,12 @@
 import React from 'react';
 
-export const Legend = ({breaks, sortField, fieldAliases, colors, className, style}) => {
-
+export const Legend = ({breaks, sortField, fieldAliases, colors, className, style, compact}) => {
     const breakInfo = breaks[sortField] || [];
     return (
         <div className={className} style={style}>
-            <h5>{fieldAliases[sortField]}</h5>
+            {
+                compact ? <h6>{fieldAliases[sortField]}</h6> : <h5>{fieldAliases[sortField]}</h5>
+            }
             <ul className="d-flex" style={{"padding": "0px"}}>
                 {
                     breakInfo.map(
@@ -25,7 +26,7 @@ export const Legend = ({breaks, sortField, fieldAliases, colors, className, styl
                                         "marginLeft": "4px",
                                         "marginRight": "5px"
                                     }}/>
-                                <span>
+                                <span style={{"fontSize": compact ? "0.75rem" : "1rem"}}>
                                     {
                                         (item.minValue*100).toFixed(2)+
                                         " - "+

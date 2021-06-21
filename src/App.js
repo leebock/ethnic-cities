@@ -14,6 +14,7 @@ function App() {
     const [sortField, setSortField] = useState("population_2010");
     const [sortAscending, setSortAscending] = useState(true);
     const [breaks, setBreaks] = useState({});
+    const [legendToggle, setLegendToggle] = useState(true);
     
     const service_url  = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Major_Cities/FeatureServer/0/query";
     
@@ -98,13 +99,17 @@ function App() {
         setSortAscending(!sortAscending);
     }
 
+    const handleLegendToggle = (e) => {
+        setLegendToggle(!legendToggle);
+    }
+
     return (
         <div className="container-fluid vh-100 d-flex flex-column">
             <header className="row mt-4 mb-3">
                 <h1 className="h2 d-none d-md-block">
                 Ethnic composition of America's 50 most populous cities
                 </h1>
-                <h1 className="h4 d-block d-md-none">
+                <h1 className="h5 d-block d-md-none mb-1">
                 Ethnic composition of America's 50 most populous cities
                 </h1>
             </header>
@@ -120,7 +125,7 @@ function App() {
                         onCancelSelect={cancelSelect}/>
                     {
                         breaks[sortField] &&
-                        <Legend className="position-absolute d-flex flex-column p-2 pb-0"
+                        <Legend className="position-absolute d-none d-md-flex flex-column p-2 pb-0"
                                 style={{
                                     "zIndex": "1000", 
                                     "bottom": "0px", 
@@ -167,6 +172,45 @@ function App() {
                                 onClick={handleOrderButtonClick}>
                         </button>
                     </div>
+                    {
+                    breaks[sortField] &&
+                    <div className="d-flex flex-column d-md-none border position-relative"
+                        style={{"padding": legendToggle ? "10px" : "0px"}}>
+                        {
+                            legendToggle &&
+                            <Legend breaks={breaks} 
+                                    sortField={sortField}
+                                    fieldAliases={fieldAliases}
+                                    colors={COLORS}
+                                    compact="true"/>
+                        }
+                        {
+                            legendToggle &&
+                            <button type="button" 
+                                    className="btn btn-outline-none position-absolute top-0"
+                                    style={
+                                        {
+                                        "backgroundImage": "url('./x.svg')",
+                                        "backgroundRepeat": "no-repeat",
+                                        "backgroundSize": "contain",
+                                        "backgroundPosition": "center",
+                                        "backgroundColor": "rgba(255,255,255,0.5)",
+                                        "height": "40px",
+                                        "width": "40px",
+                                        "top": "-35px",
+                                        "right": "8px",
+                                        }
+                                    }
+                                    onClick={handleLegendToggle}/>
+                        }
+                        {
+                            !legendToggle &&
+                            <button type="button" 
+                                    className="btn"
+                                    onClick={handleLegendToggle}>Show Legend</button>
+                        }
+                    </div>
+                    }
                     <List className="list-group w-100 overflow-auto pt-1 pt-md-0"
                         cities={cities}
                         selectedId={selectedId}
