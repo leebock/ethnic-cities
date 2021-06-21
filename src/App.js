@@ -94,8 +94,6 @@ function App() {
     
     const handleOrderButtonClick = (e) => {
         setSortAscending(!sortAscending);
-        const bgImg = sortAscending ? "./sort-down.svg" : "./sort-up.svg" ;
-        document.getElementById("buttonSortOrder").style.backgroundImage = "url('"+bgImg+"')";
     }
 
     return (
@@ -155,7 +153,7 @@ function App() {
                                 className="btn btn-outline-secondary"
                                 style={
                                     {
-                                        "backgroundImage": "url('./sort-up.svg')", 
+                                        "backgroundImage": sortAscending ? "url('./sort-up.svg')" : "url('./sort-down.svg')", 
                                         "backgroundRepeat": "no-repeat",
                                         "backgroundSize": "contain",
                                         "backgroundPosition": "center",
