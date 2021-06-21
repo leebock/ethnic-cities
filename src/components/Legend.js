@@ -1,16 +1,10 @@
 import React from 'react';
 
-export const Legend = ({breaks, sortField, fieldAliases, colors, className}) => {
+export const Legend = ({breaks, sortField, fieldAliases, colors, className, style}) => {
 
     const breakInfo = breaks[sortField] || [];
     return (
-        <div className={className} 
-            style={{
-                "zIndex": "1000", 
-                "bottom": "0px", 
-                "backgroundColor": "white", 
-                "opacity": "0.7"
-            }}>
+        <div className={className} style={style}>
             <h5>{fieldAliases[sortField]}</h5>
             <ul className="d-flex" style={{"padding": "0px"}}>
                 {
