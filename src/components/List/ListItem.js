@@ -15,7 +15,8 @@ export const ListItem = ({city, selected, sortField, fieldAliases, onSelect}) =>
     return (
         <button key={city.id} className={className} onClick={handleItemClick}>
             <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">{city.name}, {city.state}</h5>
+                <h5 className="d-none d-md-block mb-1">{city.name}, {city.state}</h5>
+                <h6 className="d-md-none mb-1">{city.name}, {city.state}</h6>
                 <small>Rank: <strong>{(city.rank)}</strong></small>
             </div>
             <div className="mb-1">
